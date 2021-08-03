@@ -1,5 +1,4 @@
-Jenkins Agent Docker image
-===
+# Jenkins Agent Docker image
 
 [![Join the chat at https://gitter.im/jenkinsci/docker](https://badges.gitter.im/jenkinsci/docker.svg)](https://gitter.im/jenkinsci/docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![GitHub stars](https://img.shields.io/github/stars/jenkinsci/docker-agent?label=GitHub%20stars)](https://github.com/jenkinsci/docker-agent)
@@ -10,7 +9,7 @@ This is a base image for Docker, which includes JDK and the Jenkins agent execut
 This executable is an instance of the [Jenkins Remoting library](https://github.com/jenkinsci/remoting).
 JDK version depends on the image and the platform, see the _Configurations_ section below.
 
-:exclamation: **Warning!** This image used to be published as [jenkinsci/slave](https://hub.docker.com/r/jenkinsci/slave/) and [jenkins/slave](https://hub.docker.com/r/jenkins/slave/). 
+:exclamation: **Warning!** This image used to be published as [jenkinsci/slave](https://hub.docker.com/r/jenkinsci/slave/) and [jenkins/slave](https://hub.docker.com/r/jenkins/slave/).
 These images are now deprecated, use [jenkins/agent](https://hub.docker.com/r/jenkins/agent/).
 
 ## Changelog
@@ -35,16 +34,15 @@ after setting **Remote root directory** to `/home/jenkins/agent`.
 
 or if using Windows Containers
 
-```
+```powershell
 docker run -i --rm --name agent --init jenkins/agent:jdk8-windowsservercore-1809 java -jar C:/ProgramData/Jenkins/agent.jar
 ```
 
 after setting **Remote root directory** to `C:\Users\jenkins\Agent`.
 
-
 ### Agent Work Directories
 
-Starting from [Remoting 3.8](https://github.com/jenkinsci/remoting/blob/master/CHANGELOG.md#38) there is a support of Work directories, 
+Starting from [Remoting 3.8](https://github.com/jenkinsci/remoting/blob/master/CHANGELOG.md#38) there is a support of Work directories,
 which provides logging by default and change the JAR Caching behavior.
 
 Call example for Linux:
@@ -55,7 +53,7 @@ docker run -i --rm --name agent1 --init -v agent1-workdir:/home/jenkins/agent je
 
 Call example for Windows Containers:
 
-```
+```powershell
 docker run -i --rm --name agent1 --init -v agent1-workdir:C:/Users/jenkins/Work jenkins/agent java -jar C:/ProgramData/Jenkins/agent.jar -workDir C:/Users/jenkins/Work
 ```
 
