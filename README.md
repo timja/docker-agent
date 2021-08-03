@@ -35,7 +35,7 @@ after setting **Remote root directory** to `/home/jenkins/agent`.
 or if using Windows Containers
 
 ```powershell
-docker run -i --rm --name agent --init jenkins/agent:jdk8-windowsservercore-1809 java -jar C:/ProgramData/Jenkins/agent.jar
+docker run -i --rm --name agent --init jenkins/agent:jdk11-windowsservercore-ltsc2019 java -jar C:/ProgramData/Jenkins/agent.jar
 ```
 
 after setting **Remote root directory** to `C:\Users\jenkins\Agent`.
@@ -54,27 +54,32 @@ docker run -i --rm --name agent1 --init -v agent1-workdir:/home/jenkins/agent je
 Call example for Windows Containers:
 
 ```powershell
-docker run -i --rm --name agent1 --init -v agent1-workdir:C:/Users/jenkins/Work jenkins/agent java -jar C:/ProgramData/Jenkins/agent.jar -workDir C:/Users/jenkins/Work
+docker run -i --rm --name agent1 --init -v agent1-workdir:C:/Users/jenkins/Work jenkins/agent:jdk11-windowsservercore-ltsc2019 java -jar C:/ProgramData/Jenkins/agent.jar -workDir C:/Users/jenkins/Work
 ```
 
 ## Configurations
 
 The image has several supported configurations, which can be accessed via the following tags:
 
-* `latest`: Latest version with the newest remoting (based on `openjdk:8-jdk-buster`)
-* `latest-stretch`: Latest version with the newest remoting (based on `openjdk:8-jdk-stretch`)
-* `latest-jdk11`: Latest version with the newest remoting and Java 11 (based on `openjdk:11-jdk-buster`)
-* `alpine`: Small image based on Alpine Linux (based on `adoptopenjdk/openjdk8:jdk8u${version}-alpine`)
-* `jdk8-windowsservercore-1809`: Latest version with the newest remoting (based on `adoptopenjdk:8-jdk-hotspot-windowsservercore-1809`)
-* `jdk11-windowsservercore-1809`: Latest version with the newest remoting and Java 11 (based on `adoptopenjdk:11-jdk-hotspot-windowsservercore-1809`)
-* `jdk8-nanoserver-1809`: Latest version with the newest remoting with Windows Nano Server
-* `jdk11-nanoserver-1809`: Latest version with the newest remoting with Windows Nano Server and Java 11
+* Linux Images:
+  * `latest` (`jdk8`, `buster-jdk8`, `latest-jdk8`, `latest-buster-jdk8`): Latest version with the newest remoting (based on `adoptopenjdk/openjdk8:jdk8u${version}-debian`)
+  * `latest-jdk11` (`jdk11`, `buster-jdk11`, `latest-buster-jdk11`): Latest version with the newest remoting and Java 11 (based on `adoptopenjdk/openjdk11:jdk-${version}-debian`)
+  * `alpine` (`alpine-jdk8`, `latest-alpine`, `latest-alpine-jdk8`): Small image based on Alpine Linux (based on `adoptopenjdk/openjdk8:jdk8u${version}-alpine`)
+  * `alpine-jdk11` (`latest-alpine-jdk11`): Small image based on Alpine Linux (based on `adoptopenjdk/openjdk11:alpine`)
+  * `archlinux` (`latest-archlinux`, `archlinux-jdk11`, `latest-archlinux-jdk11`): Image based on Arch Linux with JDK11 (based on `archlinux:latest`)
+
+* Windows Images:
+  * `jdk11-windowsservercore-1809`: Latest version with the newest remoting and Java 11 (based on `adoptopenjdk:11-jdk-hotspot-windowsservercore-1809`)
+  * `jdk11-nanoserver-1809`: Latest version with the newest remoting with Windows Nano Server and Java 11
+
+The file `docker-bake.hcl` defines all the configuration for Linux images and their associated tags.
 
 There are also versioned tags in DockerHub, and they are recommended for production use.
 See the full list [here](https://hub.docker.com/r/jenkins/agent/tags)
 
-## Java 11 Support
+## Java 8 Support
 
-Java 11 support is available for Debian-based images and Windows images.
-Alpine image for Java 11 will not be provided, see [JENKINS-54487](https://issues.jenkins-ci.org/browse/JENKINS-54487).
-There is a probability that images for Java 11 will be changed to AdoptOpenJDK base images in the future.
+Please note that the following Java 8 images have been deprecated:
+
+* `jdk8-nanoserver-1809`: Windows nanoserver 18.09 with JDK8
+* `jdk8-windowsservercore-1809`: Windows Server Core 18.09 with JDK8 (based on `adoptopenjdk:8-jdk-hotspot-windowsservercore-1809`)
